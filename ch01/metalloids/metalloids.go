@@ -4,7 +4,10 @@
 // See http://en.wikipedia.org/wiki/Mole_(unit)
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 const avogadro float64 = 6.0221413e+23
 const grams = 100.0
@@ -32,8 +35,12 @@ var metalloids = []metalloid{
 }
 
 // finds # of moles
-func moles(mass amu) float64 {
-	return float64(mass) / grams
+func moles(mass amu) (float64, error) {
+	if mass == 0 {
+		return 0, fmt.Errorf("Invalid mass (0)")
+	} else {
+		return float64(mass) / grams, nil
+	}
 }
 
 // returns # of atoms moles
@@ -51,9 +58,14 @@ func headers() string {
 func main() {
 	fmt.Print(headers())
 	for _, m := range metalloids {
-		fmt.Printf(
-			"%-10s %-10d %-10.3f %e\n",
-			m.name, m.number, m.weight.float(), atoms(moles(m.weight)),
-		)
+		if mols, err := moles(m.weight); err == nil {
+			fmt.Printf(
+				"%-10s %-10d %-10.3f %e\n",
+				m.name, m.number, m.weight.float(), atoms(mols),
+			)
+		} else {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		}
+
 	}
 }

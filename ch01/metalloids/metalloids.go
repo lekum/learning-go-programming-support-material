@@ -6,7 +6,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 const avogadro float64 = 6.0221413e+23
@@ -24,6 +23,13 @@ type metalloid struct {
 	weight amu
 }
 
+func (m metalloid) String() string {
+	return fmt.Sprintf(
+		"%-10s %-10d %-10.3f %e",
+		m.name, m.number, m.weight.float(), atoms(moles(m.weight)),
+	)
+}
+
 var metalloids = []metalloid{
 	metalloid{"Boron", 5, 10.81},
 	metalloid{"Silicon", 14, 28.085},
@@ -35,12 +41,8 @@ var metalloids = []metalloid{
 }
 
 // finds # of moles
-func moles(mass amu) (float64, error) {
-	if mass == 0 {
-		return 0, fmt.Errorf("Invalid mass (0)")
-	} else {
-		return float64(mass) / grams, nil
-	}
+func moles(mass amu) float64 {
+	return float64(mass) / grams
 }
 
 // returns # of atoms moles
@@ -55,17 +57,11 @@ func headers() string {
 		"Element", "Number", "AMU", grams,
 	)
 }
+
 func main() {
 	fmt.Print(headers())
 	for _, m := range metalloids {
-		if mols, err := moles(m.weight); err == nil {
-			fmt.Printf(
-				"%-10s %-10d %-10.3f %e\n",
-				m.name, m.number, m.weight.float(), atoms(mols),
-			)
-		} else {
-			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		}
+		fmt.Print(m, "\n")
 
 	}
 }

@@ -1,31 +1,37 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
-type person struct {
-	name  string
-	title string
-	address
+type Person struct {
+	Name    string `json:"person_name"`
+	Title   string `json:"person_title"`
+	Address `json:"person_address_obj"`
 }
 
-type address struct {
-	street      string
-	city, state string
-	postal      string
+type Address struct {
+	Street string `json:"person_addr_street"`
+	City   string `json:"person_city"`
+	State  string `json:"person_state"`
+	Postal string `json:"person_postal_code"`
 }
 
-func updateName(p *person, name string) {
-	p.name = name
+func updateName(p *Person, name string) {
+	p.Name = name
 }
 
 func main() {
-	p := person{}
-	p.name = "uknown"
-	p.title = "author"
-	p.street = "12345 Main street"
-	p.city, p.state = "Goville", "Go"
-	p.postal = "12345"
+	p := Person{}
+	p.Name = "uknown"
+	p.Title = "author"
+	p.Street = "12345 Main street"
+	p.City, p.State = "Goville", "Go"
+	p.Postal = "12345"
 	fmt.Println(p)
 	updateName(&p, "Vladimir Vivien")
 	fmt.Println(p)
+	b, _ := json.Marshal(p)
+	fmt.Println(string(b))
 }

@@ -63,4 +63,9 @@ func main() {
 	}
 	p.fly()
 	p.start()
+	t := truck{}
+	t.vehicle.make = "HONDA"
+	fmt.Println(t)
+	t.drive()
+	t.start()
 }

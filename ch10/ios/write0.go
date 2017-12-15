@@ -8,7 +8,11 @@ import (
 func main() {
 	rows := []string{
 		"The quick brown fox\n",
-		"jumps over the lazy dog",
+		"jumps over the lazy dog\n",
+	}
+	rows2 := [][]byte{
+		[]byte("The quick brown fox\n"),
+		[]byte("jumps over the lazy dog\n"),
 	}
 	fout, err := os.Create("./filewrite.data")
 	if err != nil {
@@ -24,4 +28,12 @@ func main() {
 			fmt.Printf("Error reading line: %v\n", err)
 		}
 	}
+
+	for _, row := range rows2 {
+		_, err = fout.Write(row)
+		if err != nil {
+			fmt.Printf("Error reading line: %v\n", err)
+		}
+	}
+
 }

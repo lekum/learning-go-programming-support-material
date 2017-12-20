@@ -1,0 +1,3 @@
+Jupyter 3000 4 NO
+Saturn 30 0 YES
+Misterious 220 3 YES

@@ -18,6 +18,7 @@ func currs(resp http.ResponseWriter, req *http.Request) {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println("Request:", currRequest)
 
 	result := curr.Find(currencies, currRequest.Get)
 	enc := json.NewEncoder(resp)
@@ -26,6 +27,7 @@ func currs(resp http.ResponseWriter, req *http.Request) {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println("Response:", result)
 }
 
 func main() {

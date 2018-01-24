@@ -6,19 +6,6 @@ import (
 	"testing"
 )
 
-func TestFoo(t *testing.T) {
-	t.Log("Working as expected")
-}
-
-func TestFooFails(t *testing.T) {
-	t.Error("Failing as expected!")
-}
-
-func TestFooFails2(t *testing.T) {
-	t.Logf("%s\n", "Failing as expected too")
-	t.Fail()
-}
-
 func TestNewVector(t *testing.T) {
 	v := New(1, 2, 4)
 	if len(v) != 3 {
